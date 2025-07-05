@@ -183,17 +183,6 @@ const FileTreeNode = ({
               RESET
             </Button>
           </div>
-          
-          {/* Right Half - Persona Image */}
-          <div className="w-28 flex-shrink-0">
-            <div className="w-full h-full rounded-lg overflow-hidden border border-border">
-              <img 
-                src={klarKentImage} 
-                alt="Klark Kent Avatar"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
