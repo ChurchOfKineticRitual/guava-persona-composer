@@ -184,12 +184,26 @@ export const NavigatePanel = () => {
 
       {/* Metadata Section */}
       <div className="border-t border-border p-4">
-        <div className="mb-4">
-          <h3 className="text-sm font-medium text-foreground mb-3">METADATA</h3>
+        <div className="flex gap-3 h-24">
+          {/* Left Half - Metadata and Reset */}
+          <div className="flex-1 flex flex-col justify-between">
+            <div>
+              <h3 className="text-sm font-medium text-foreground mb-2">METADATA</h3>
+              <div className="text-xs text-muted-foreground space-y-1 font-mono">
+                <div>- Voice_ID</div>
+                <div>- Image_filename</div>
+                <div>- Other metadata</div>
+              </div>
+            </div>
+            
+            <Button variant="outline" size="sm" className="w-1/2 mt-2">
+              RESET
+            </Button>
+          </div>
           
-          {/* Persona Image */}
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-28 rounded-lg overflow-hidden border border-border shadow-elegant">
+          {/* Right Half - Persona Image */}
+          <div className="w-14">
+            <div className="w-full h-full rounded-lg overflow-hidden border border-border shadow-elegant">
               <img 
                 src={personaPlaceholder} 
                 alt="Persona Avatar"
@@ -197,17 +211,7 @@ export const NavigatePanel = () => {
               />
             </div>
           </div>
-          
-          <div className="text-xs text-muted-foreground space-y-1 font-mono">
-            <div>- Voice_ID</div>
-            <div>- Image_filename</div>
-            <div>- Other metadata</div>
-          </div>
         </div>
-        
-        <Button variant="outline" size="sm" className="w-1/2">
-          RESET
-        </Button>
       </div>
     </div>
   );
