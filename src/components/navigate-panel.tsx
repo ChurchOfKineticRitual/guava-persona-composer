@@ -1,179 +1,41 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ChevronRight, ChevronDown, File, Folder, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePersona } from "@/contexts/persona-context";
+import { getPersonaStructure, getPersonaMetadata, FileNode } from "@/utils/file-system";
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
-interface FileNode {
-  name: string;
-  type: 'file' | 'folder';
-  children?: FileNode[];
-  edited?: boolean;
-  selected?: 'active' | 'inactive' | 'partial';
-}
+export const NavigatePanel = () => {
+  const { selectedPersona, selectedVersion } = usePersona();
+  const [fileTree, setFileTree] = useState<FileNode[]>([]);
+  const [metadata, setMetadata] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-// Klark Kent persona file structure
-const klarKentFileTree: FileNode[] = [
-  {
-    name: "audio",
-    type: "folder",
-    selected: "inactive",
-    children: [
-      {
-        name: "KK_Ambience_Marsh.mp3",
-        type: "file",
-        selected: "inactive"
+  // Load persona structure dynamically when persona/version changes
+  useEffect(() => {
+    const loadPersonaData = async () => {
+      if (!selectedPersona || !selectedVersion) return;
+      
+      setLoading(true);
+      try {
+        const [structure, meta] = await Promise.all([
+          getPersonaStructure(selectedPersona, selectedVersion),
+          getPersonaMetadata(selectedPersona, selectedVersion)
+        ]);
+        
+        setFileTree(structure);
+        setMetadata(meta);
+      } catch (error) {
+        console.error('Failed to load persona data:', error);
+      } finally {
+        setLoading(false);
       }
-    ]
-  },
-  {
-    name: "image",
-    type: "folder", 
-    selected: "inactive",
-    children: [
-      {
-        name: "KK_Shrinkface_M.png",
-        type: "file",
-        selected: "inactive"
-      }
-    ]
-  },
-  {
-    name: "versions",
-    type: "folder",
-    selected: "active",
-    children: [
-      {
-        name: "INITIAL",
-        type: "folder",
-        selected: "active",
-        children: [
-          {
-            name: "agents",
-            type: "folder",
-            selected: "active",
-            children: [
-              {
-                name: "critic",
-                type: "folder",
-                selected: "active",
-                children: [
-                  { name: "persona_data.xml", type: "file", selected: "active" },
-                  { name: "system_prompt.md", type: "file", selected: "active" }
-                ]
-              },
-              {
-                name: "researcher", 
-                type: "folder",
-                selected: "active",
-                children: [
-                  { name: "persona_data.xml", type: "file", selected: "active" },
-                  { name: "system_prompt.md", type: "file", selected: "active" }
-                ]
-              },
-              {
-                name: "studio",
-                type: "folder", 
-                selected: "active",
-                children: [
-                  { name: "persona_data.xml", type: "file", selected: "active" },
-                  { name: "system_prompt.md", type: "file", selected: "active" }
-                ]
-              },
-              {
-                name: "voice",
-                type: "folder",
-                selected: "active", 
-                children: [
-                  { name: "persona_data.xml", type: "file", selected: "active" },
-                  { name: "system_prompt.md", type: "file", selected: "active", edited: true }
-                ]
-              },
-              {
-                name: "writer",
-                type: "folder",
-                selected: "active",
-                children: [
-                  { name: "persona_data.xml", type: "file", selected: "active" },
-                  { name: "system_prompt.md", type: "file", selected: "active" }
-                ]
-              }
-            ]
-          },
-          {
-            name: "config",
-            type: "folder",
-            selected: "active",
-            children: [
-              { name: "kontextbase_map.xml", type: "file", selected: "active" },
-              { name: "register_selection_guide.xml", type: "file", selected: "active" }
-            ]
-          },
-          {
-            name: "content_examples",
-            type: "folder",
-            selected: "active",
-            children: [
-              {
-                name: "spoken",
-                type: "folder",
-                selected: "active",
-                children: [
-                  { name: "core_principles.xml", type: "file", selected: "active" },
-                  { name: "qna_examples.xml", type: "file", selected: "active" },
-                  { name: "target_ckr02.xml", type: "file", selected: "active" },
-                  { name: "target_dearmrc.xml", type: "file", selected: "active" }
-                ]
-              },
-              {
-                name: "written", 
-                type: "folder",
-                selected: "active",
-                children: [
-                  { name: "core_principles.xml", type: "file", selected: "active" },
-                  { name: "qna_examples.xml", type: "file", selected: "active" },
-                  { name: "target_webstore.xml", type: "file", selected: "active" }
-                ]
-              }
-            ]
-          },
-          {
-            name: "data",
-            type: "folder",
-            selected: "active", 
-            children: [
-              { name: "canonical_entities.xml", type: "file", selected: "active" },
-              { name: "codex_summary.xml", type: "file", selected: "active" },
-              { name: "proprietary_lexicon.xml", type: "file", selected: "active" },
-              {
-                name: "lore",
-                type: "folder",
-                selected: "active",
-                children: [
-                  { name: "codex_kinesis_full.md", type: "file", selected: "active" },
-                  { name: "original_sources_archive.md", type: "file", selected: "active" },
-                  { name: "terminology_reference_source.md", type: "file", selected: "active" }
-                ]
-              }
-            ]
-          },
-          {
-            name: "definition",
-            type: "folder",
-            selected: "active",
-            children: [
-              { name: "development_log.md", type: "file", selected: "active" },
-              { name: "fine_tuning_log.md", type: "file", selected: "active" },
-              { name: "persona_spec.md", type: "file", selected: "active" }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-];
+    };
 
+    loadPersonaData();
+  }, [selectedPersona, selectedVersion]);
+  
 const SelectionIndicator = ({ 
   selected, 
   onClick 
@@ -243,7 +105,7 @@ const FileTreeNode = ({
         <div>
           {node.children.map((child, index) => (
             <FileTreeNode 
-              key={index} 
+              key={child.path || `${child.name}-${index}`}
               node={child} 
               depth={depth + 1} 
               onNodeUpdate={(updatedChild) => {
@@ -261,34 +123,24 @@ const FileTreeNode = ({
   );
 };
 
-export const NavigatePanel = () => {
-  const { selectedPersona, selectedVersion } = usePersona();
-  
-  // Filter file tree to show only the selected version's content
-  const currentVersionFiles = useMemo(() => {
-    if (!selectedPersona || !selectedVersion) return [];
-    
-    // Find the selected version folder and return its contents
-    const versionsFolder = klarKentFileTree.find(node => node.name === "versions");
-    if (!versionsFolder?.children) return [];
-    
-    const selectedVersionFolder = versionsFolder.children.find(node => node.name === selectedVersion);
-    return selectedVersionFolder?.children || [];
-  }, [selectedPersona, selectedVersion]);
-  
-  const [fileTree, setFileTree] = useState(currentVersionFiles);
-  
-  // Update file tree when persona/version changes
-  useMemo(() => {
-    setFileTree(currentVersionFiles);
-  }, [currentVersionFiles]);
-  
   const handleNodeUpdate = (index: number, updatedNode: FileNode) => {
     const newTree = [...fileTree];
     newTree[index] = updatedNode;
     setFileTree(newTree);
   };
-  
+
+  if (loading) {
+    return (
+      <div className="h-full flex flex-col">
+        <div className="p-4 border-b border-border">
+          <h2 className="text-lg font-semibold text-foreground">NAVIGATE</h2>
+        </div>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-muted-foreground">Loading persona structure...</div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
@@ -301,7 +153,7 @@ export const NavigatePanel = () => {
         <div className="space-y-0.5">
           {fileTree.map((node, index) => (
             <FileTreeNode 
-              key={index} 
+              key={node.path || `${node.name}-${index}`}
               node={node} 
               onNodeUpdate={(updatedNode) => handleNodeUpdate(index, updatedNode)}
             />
@@ -317,8 +169,8 @@ export const NavigatePanel = () => {
             <div className="flex-1 min-h-0">
               <h3 className="text-lg font-semibold text-foreground mb-2">METADATA</h3>
               <div className="overflow-y-auto h-20 text-xs text-muted-foreground space-y-1 font-mono">
-                <div>- Voice_ID: YOUR_ELEVENLABS_VOICE_ID_HERE</div>
-                <div>- Image: KK_Shrinkface_M.png</div>
+                <div>- Voice_ID: {metadata?.voiceId || 'Loading...'}</div>
+                <div>- Image: {metadata?.image || 'Loading...'}</div>
               </div>
             </div>
             

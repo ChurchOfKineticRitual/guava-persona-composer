@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
+import { getAvailablePersonas, getPersonaVersions } from '@/utils/file-system';
 
 interface PersonaContextType {
   selectedPersona: string;
@@ -23,10 +24,10 @@ export const PersonaProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPersona, setSelectedPersona] = useState('klark_kent');
   const [selectedVersion, setSelectedVersion] = useState('INITIAL');
   
-  // Available personas (would be loaded from GitHub in real implementation)
+  // Available personas - will be loaded dynamically in future
   const personas = ['klark_kent'];
   
-  // Available versions for selected persona (would be loaded from GitHub in real implementation)
+  // Available versions for selected persona - will be loaded dynamically in future  
   const versions = ['INITIAL'];
 
   return (
