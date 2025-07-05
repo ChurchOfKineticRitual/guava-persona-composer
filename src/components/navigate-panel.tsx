@@ -184,25 +184,24 @@ export const NavigatePanel = () => {
 
       {/* Metadata Section */}
       <div className="border-t border-border p-4">
-        <div className="flex gap-3 h-24">
+        <div className="flex gap-3 h-20">
           {/* Left Half - Metadata and Reset */}
           <div className="flex-1 flex flex-col justify-between">
             <div>
-              <h3 className="text-sm font-medium text-foreground mb-2">METADATA</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2">METADATA</h3>
               <div className="text-xs text-muted-foreground space-y-1 font-mono">
                 <div>- Voice_ID</div>
                 <div>- Image_filename</div>
-                <div>- Other metadata</div>
               </div>
             </div>
             
-            <Button variant="outline" size="sm" className="w-1/2 mt-2">
+            <Button variant="outline" size="sm" className="flex-1 mt-2">
               RESET
             </Button>
           </div>
           
           {/* Right Half - Persona Image */}
-          <div className="w-14">
+          <div className="w-12">
             <div className="w-full h-full rounded-lg overflow-hidden border border-border shadow-elegant">
               <img 
                 src={personaPlaceholder} 
