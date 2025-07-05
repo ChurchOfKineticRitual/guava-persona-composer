@@ -151,7 +151,9 @@ const klarKentFileTree: FileNode[] = [
                 type: "folder",
                 selected: "active",
                 children: [
-                  { name: "original_sources_archive.md", type: "file", selected: "active" }
+                  { name: "codex_kinesis_full.md", type: "file", selected: "active" },
+                  { name: "original_sources_archive.md", type: "file", selected: "active" },
+                  { name: "terminology_reference_source.md", type: "file", selected: "active" }
                 ]
               }
             ]
@@ -162,7 +164,8 @@ const klarKentFileTree: FileNode[] = [
             selected: "active",
             children: [
               { name: "development_log.md", type: "file", selected: "active" },
-              { name: "fine_tuning_log.md", type: "file", selected: "active" }
+              { name: "fine_tuning_log.md", type: "file", selected: "active" },
+              { name: "persona_spec.md", type: "file", selected: "active" }
             ]
           }
         ]
