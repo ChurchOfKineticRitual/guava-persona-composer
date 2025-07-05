@@ -184,7 +184,7 @@ export const NavigatePanel = () => {
 
       {/* Metadata Section */}
       <div className="border-t border-border p-4">
-        <div className="flex gap-3 h-20">
+        <div className="flex gap-3 h-28">
           {/* Left Half - Metadata and Reset */}
           <div className="flex-1 flex flex-col justify-between">
             <div>
@@ -195,13 +195,13 @@ export const NavigatePanel = () => {
               </div>
             </div>
             
-            <Button variant="outline" size="sm" className="flex-1 mt-2">
+            <Button variant="outline" size="sm" className="w-full">
               RESET
             </Button>
           </div>
           
           {/* Right Half - Persona Image */}
-          <div className="w-12">
+          <div className="w-16">
             <div className="w-full h-full rounded-lg overflow-hidden border border-border shadow-elegant">
               <img 
                 src={personaPlaceholder} 
