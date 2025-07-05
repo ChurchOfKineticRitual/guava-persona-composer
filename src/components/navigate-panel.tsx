@@ -109,17 +109,37 @@ const mockFileTree: FileNode[] = [
   }
 ];
 
-const SelectionIndicator = ({ selected }: { selected?: 'active' | 'inactive' | 'partial' }) => {
+const SelectionIndicator = ({ 
+  selected, 
+  onClick 
+}: { 
+  selected?: 'active' | 'inactive' | 'partial';
+  onClick: () => void;
+}) => {
   if (selected === 'active') {
-    return <Circle className="w-3 h-3 fill-primary text-primary" />;
+    return <Circle className="w-3 h-3 fill-primary text-primary cursor-pointer hover:opacity-80" onClick={onClick} />;
   } else if (selected === 'partial') {
-    return <Circle className="w-3 h-3 fill-primary/50 text-primary" />;
+    return <Circle className="w-3 h-3 fill-primary/50 text-primary cursor-pointer hover:opacity-80" onClick={onClick} />;
   }
-  return <Circle className="w-3 h-3 text-muted-foreground/40" />;
+  return <Circle className="w-3 h-3 text-muted-foreground/40 cursor-pointer hover:text-muted-foreground" onClick={onClick} />;
 };
 
-const FileTreeNode = ({ node, depth = 0 }: { node: FileNode; depth?: number }) => {
+const FileTreeNode = ({ 
+  node, 
+  depth = 0, 
+  onNodeUpdate 
+}: { 
+  node: FileNode; 
+  depth?: number;
+  onNodeUpdate: (updatedNode: FileNode) => void;
+}) => {
   const [isExpanded, setIsExpanded] = useState(true);
+  
+  const handleSelectionClick = () => {
+    const nextState: 'active' | 'inactive' | 'partial' = node.selected === 'active' ? 'inactive' : 'active';
+    const updatedNode = { ...node, selected: nextState };
+    onNodeUpdate(updatedNode);
+  };
 
   return (
     <div>
@@ -143,7 +163,7 @@ const FileTreeNode = ({ node, depth = 0 }: { node: FileNode; depth?: number }) =
           </button>
         )}
         
-        <SelectionIndicator selected={node.selected} />
+        <SelectionIndicator selected={node.selected} onClick={handleSelectionClick} />
         
         {node.type === 'folder' ? (
           <Folder className="w-4 h-4 text-muted-foreground" />
@@ -157,7 +177,18 @@ const FileTreeNode = ({ node, depth = 0 }: { node: FileNode; depth?: number }) =
       {node.type === 'folder' && isExpanded && node.children && (
         <div>
           {node.children.map((child, index) => (
-            <FileTreeNode key={index} node={child} depth={depth + 1} />
+            <FileTreeNode 
+              key={index} 
+              node={child} 
+              depth={depth + 1} 
+              onNodeUpdate={(updatedChild) => {
+                if (node.children) {
+                  const updatedChildren = [...node.children];
+                  updatedChildren[index] = updatedChild;
+                  onNodeUpdate({ ...node, children: updatedChildren });
+                }
+              }}
+            />
           ))}
         </div>
       )}
@@ -166,6 +197,14 @@ const FileTreeNode = ({ node, depth = 0 }: { node: FileNode; depth?: number }) =
 };
 
 export const NavigatePanel = () => {
+  const [fileTree, setFileTree] = useState(mockFileTree);
+  
+  const handleNodeUpdate = (index: number, updatedNode: FileNode) => {
+    const newTree = [...fileTree];
+    newTree[index] = updatedNode;
+    setFileTree(newTree);
+  };
+  
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
@@ -176,8 +215,12 @@ export const NavigatePanel = () => {
       {/* File Tree */}
       <div className="flex-1 overflow-y-auto p-2">
         <div className="space-y-0.5">
-          {mockFileTree.map((node, index) => (
-            <FileTreeNode key={index} node={node} />
+          {fileTree.map((node, index) => (
+            <FileTreeNode 
+              key={index} 
+              node={node} 
+              onNodeUpdate={(updatedNode) => handleNodeUpdate(index, updatedNode)}
+            />
           ))}
         </div>
       </div>
