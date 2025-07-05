@@ -98,7 +98,12 @@ const FileTreeNode = ({
           <File className="w-4 h-4 text-muted-foreground" />
         )}
         
-        <span className="flex-1 truncate font-mono">{node.name}</span>
+        <span className={cn(
+          "flex-1 truncate",
+          node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono"
+        )}>
+          {node.name}
+        </span>
       </div>
       
       {node.type === 'folder' && isExpanded && node.children && (
@@ -181,7 +186,7 @@ const FileTreeNode = ({
           
           {/* Right Half - Persona Image */}
           <div className="w-28 flex-shrink-0">
-            <div className="w-full h-full rounded-lg overflow-hidden border border-border shadow-elegant">
+            <div className="w-full h-full rounded-lg overflow-hidden border border-border">
               <img 
                 src={klarKentImage} 
                 alt="Klark Kent Avatar"
