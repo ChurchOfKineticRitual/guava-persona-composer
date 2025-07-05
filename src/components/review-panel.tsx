@@ -4,11 +4,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, Save, Play } from "lucide-react";
+import { usePersona } from "@/contexts/persona-context";
 
 
 export const ReviewPanel = () => {
-  const [personaSelect, setPersonaSelect] = useState("");
-  const [versionSelect, setVersionSelect] = useState("");
+  const { selectedPersona, selectedVersion, setSelectedPersona, setSelectedVersion, personas, versions } = usePersona();
   const [userPrompt, setUserPrompt] = useState("");
   const [modelOutput, setModelOutput] = useState("Read-only text:\nmost recent\nMODEL OUTPUT");
 
@@ -39,14 +39,16 @@ export const ReviewPanel = () => {
             <label className="text-xs font-medium text-muted-foreground mb-1 block">
               PERSONA SELECT
             </label>
-            <Select value={personaSelect} onValueChange={setPersonaSelect}>
+            <Select value={selectedPersona} onValueChange={setSelectedPersona}>
               <SelectTrigger className="w-full bg-input border-border">
                 <SelectValue placeholder="Select persona..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="kermit">KermitTheFrog</SelectItem>
-                <SelectItem value="piggy">MissPiggy</SelectItem>
-                <SelectItem value="gonzo">Gonzo</SelectItem>
+                {personas.map((persona) => (
+                  <SelectItem key={persona} value={persona}>
+                    {persona.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
@@ -55,14 +57,16 @@ export const ReviewPanel = () => {
             <label className="text-xs font-medium text-muted-foreground mb-1 block">
               PERSONA VERSION
             </label>
-            <Select value={versionSelect} onValueChange={setVersionSelect}>
+            <Select value={selectedVersion} onValueChange={setSelectedVersion}>
               <SelectTrigger className="w-full bg-input border-border">
                 <SelectValue placeholder="Select version..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="v1">2025-07-05_204515</SelectItem>
-                <SelectItem value="v2">2025-07-05_213000</SelectItem>
-                <SelectItem value="v3">initial_version</SelectItem>
+                {versions.map((version) => (
+                  <SelectItem key={version} value={version}>
+                    {version}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

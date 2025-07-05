@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ChevronRight, ChevronDown, File, Folder, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { usePersona } from "@/contexts/persona-context";
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
 interface FileNode {
@@ -258,7 +259,26 @@ const FileTreeNode = ({
 };
 
 export const NavigatePanel = () => {
-  const [fileTree, setFileTree] = useState(klarKentFileTree);
+  const { selectedPersona, selectedVersion } = usePersona();
+  
+  // Filter file tree to show only the selected version's content
+  const currentVersionFiles = useMemo(() => {
+    if (!selectedPersona || !selectedVersion) return [];
+    
+    // Find the selected version folder and return its contents
+    const versionsFolder = klarKentFileTree.find(node => node.name === "versions");
+    if (!versionsFolder?.children) return [];
+    
+    const selectedVersionFolder = versionsFolder.children.find(node => node.name === selectedVersion);
+    return selectedVersionFolder?.children || [];
+  }, [selectedPersona, selectedVersion]);
+  
+  const [fileTree, setFileTree] = useState(currentVersionFiles);
+  
+  // Update file tree when persona/version changes
+  useMemo(() => {
+    setFileTree(currentVersionFiles);
+  }, [currentVersionFiles]);
   
   const handleNodeUpdate = (index: number, updatedNode: FileNode) => {
     const newTree = [...fileTree];
@@ -288,30 +308,24 @@ export const NavigatePanel = () => {
 
       {/* Metadata Section */}
       <div className="border-t border-border p-4">
-        <div className="flex gap-3 h-48">
+        <div className="flex gap-3 h-40">
           {/* Left Half - Metadata and Reset */}
-          <div className="flex-1 flex flex-col justify-end">
-            <div className="mb-3">
+          <div className="flex-1 flex flex-col">
+            <div className="flex-1 min-h-0">
               <h3 className="text-lg font-semibold text-foreground mb-2">METADATA</h3>
-              <div className="text-xs text-muted-foreground space-y-1 font-mono">
+              <div className="overflow-y-auto h-20 text-xs text-muted-foreground space-y-1 font-mono">
                 <div>- Voice_ID: YOUR_ELEVENLABS_VOICE_ID_HERE</div>
                 <div>- Image: KK_Shrinkface_M.png</div>
-                <div>- Persona: Klark Kent</div>
-                <div>- Version: INITIAL</div>
-                <div>- Agents: 5 (critic, researcher, studio, voice, writer)</div>
-                <div>- Status: Active</div>
-                <div>- Church: CKR (Church of Kinetic Ritual)</div>
-                <div>- Location: Llandyckk, Wales</div>
               </div>
             </div>
             
-            <Button variant="outline" size="sm" className="w-3/4">
+            <Button variant="outline" size="sm" className="w-3/4 mt-2">
               RESET
             </Button>
           </div>
           
           {/* Right Half - Persona Image */}
-          <div className="w-28">
+          <div className="w-28 flex-shrink-0">
             <div className="w-full h-full rounded-lg overflow-hidden border border-border shadow-elegant">
               <img 
                 src={klarKentImage} 
