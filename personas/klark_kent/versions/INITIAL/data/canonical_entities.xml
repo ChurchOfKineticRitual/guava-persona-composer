@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KlarkKentCanonicalEntities>
+    <Metadata>
+        <Purpose>Provides structured lists of canonical entities within the Klark Kent universe, including institutions, locations, forms, statutes, and key concepts.</Purpose>
+        <Scope>Covers named entities referenced across KK materials essential for maintaining world consistency.</Scope>
+        <UsageNote>Load this file when generating content that requires specific names of places, organizations, documents, or core ideas from KK's world.</UsageNote>
+        <SourceDocuments>KK_TerminologyReference, KK_RegisterOne_Written-Official.md, KK_RegisterTwo_Spoken-Conversational.md, THE CODEX KINESIS, products.html, KK_Original_Sources_Archive.md, etc.</SourceDocuments>
+    </Metadata>
+
+    <Categories>
+
+        <Category name="Institutions &amp; Organizations">
+            <Entity id="CKR">
+                <Name>Church of Kinetic Ritual</Name>
+                <Abbreviation>CKR</Abbreviation>
+                <Description>Klark Kent's overarching metaphysical organization, promoting Kinetic Ritual.</Description>
+            </Entity>
+            <Entity id="ITA">
+                <Name>Intranodal Transit Authority</Name>
+                <Abbreviation>ITA</Abbreviation>
+                <Description>Primary regulatory body overseeing rhythmadelic phenomena, issuing directives, handling compliance, audits, and registries. Also governs intranodal movement and communication.</Description>
+            </Entity>
+            <Entity id="CRV">
+                <Name>Council of Resonant Verification</Name>
+                <Abbreviation>CRV</Abbreviation>
+                <Description>Authentication authority, approves methodologies like Vibrational Genealogy and diagnostic kits.</Description>
+            </Entity>
+            <Entity id="BHD">
+                <Name>Buttercup, Harlequin &amp; Drood</Name>
+                <Abbreviation>BH&amp;D</Abbreviation> <!-- Note variation in original source -->
+                <Description>Klark Kent's longstanding attorneys, handling legal matters such as copyright enforcement (e.g., Lasagna Incident).</Description>
+            </Entity>
+             <Entity id="SCIA">
+                 <Name>Swiss Cottage Institute (for Anomalous Affairs/Phenomena)</Name>
+                 <Abbreviation>SCI / SCIA / SCIP</Abbreviation> <!-- Allow variations -->
+                 <Description>Research institute involved in verifying phenomena (e.g., post-Feynman-Kent incident) and conducting field tests (e.g., Qualia assessment).</Description>
+             </Entity>
+             <Entity id="VDSA">
+                 <Name>The Vatican’s Department of Suppressed Acoustics</Name>
+                 <Description>An alleged censorship authority mentioned in the Codex Kinesis foreword.</Description>
+             </Entity>
+             <Entity id="REO">
+                 <Name>Ritual Enforcement Officer(s)</Name>
+                 <Abbreviation>REO</Abbreviation>
+                 <Description>Personnel responsible for enforcing compliance and intervening in unsanctioned kinetic activity. Associated with specific uniforms/sigils.</Description>
+             </Entity>
+              <Entity id="CKR_Consortium">
+                 <Name>CKR Risogarphic Consortium</Name> <!-- Spelling from webstore -->
+                 <Description>Sanctioning body mentioned in relation to Kinetic Entrainment Tools.</Description>
+            </Entity>
+              <Entity id="TMRC">
+                 <Name>Thigher Mammalian Risograf Consortia</Name> <!-- Spelling from webstore footer -->
+                 <Description>Regulatory body mentioned in the webstore compliance notice.</Description>
+            </Entity>
+            <Entity id="OPS">
+                 <Name>Office of Pineal Stability</Name>
+                 <Description>Office to which practitioners report positive Unauthorized Qualia self-assessments.</Description>
+             </Entity>
+        </Category>
+
+        <Category name="Locations">
+            <Entity id="Llandyckk">
+                <Name>Llandyckk</Name>
+                <Description>Welsh village designated Primary Manifestation Locus Alpha. High baseline permeability, site of initial materialization and calibration. Also location of Rhythmic Rehabilitation Center.</Description>
+            </Entity>
+            <Entity id="EastHendred">
+                <Name>East Hendred</Name>
+                <Description>Site of significant documented phenomena, including the 'Orgasmic Resonance Cascade' / 'Mass Ejaculation Event' and potentially a location for meditation ('cave beneath East Hendred').</Description>
+            </Entity>
+             <Entity id="Fewcott">
+                 <Name>Fewcott (near Bicester)</Name>
+                 <Description>Location associated with underground research facility, sub-studies (e.g., Vibrational Genealogy), pineal research, and potentially an operational monitoring station.</Description>
+             </Entity>
+            <Entity id="StJohnsWood">
+                <Name>St. John’s Wood</Name>
+                <Description>Location mentioned in original press release as site of KK performance/phenomena.</Description>
+            </Entity>
+             <Entity id="Tyneside">
+                 <Name>Tyneside</Name>
+                 <Description>Location mentioned in original press release (Barclays Bank clerk experience).</Description>
+             </Entity>
+             <Entity id="ChateauMarouatte">
+                 <Name>Château de Marouatte</Name>
+                 <Description>Location mentioned in original terminology reference.</Description>
+             </Entity>
+             <Entity id="SwissCottage">
+                 <Name>Swiss Cottage</Name>
+                 <Description>Likely location of the Swiss Cottage Institute.</Description>
+             </Entity>
+              <Entity id="Bicester">
+                 <Name>Bicester</Name>
+                 <Description>Town near Fewcott, used for geographical context.</Description>
+             </Entity>
+        </Category>
+
+        <Category name="Forms &amp; Codes">
+             <Entity id="FormKK137B">
+                 <Name>Form KK-137B</Name>
+                 <Description>Regulation documentation form (e.g., for documenting band activities). Also associated with Field Documentation Unit and operator certification standards.</Description>
+             </Entity>
+            <Entity id="FormRF12">
+                <Name>Form RF-12</Name>
+                <Description>Form for logging "Anomalous Reception Events" during transcription.</Description>
+            </Entity>
+             <Entity id="FormPSSPECL3">
+                 <Name>Form PS-SPEC-L3</Name>
+                 <Description>Specifies conditions under which perspiration exhibits trace phosphorescence.</Description>
+             </Entity>
+             <Entity id="FormRF9B">
+                 <Name>Form RF-9B</Name>
+                 <Description>Secure form for reporting positive Unauthorized Qualia Self-Assessment to the Office of Pineal Stability.</Description>
+            </Entity>
+             <Entity id="FormCRVACCESSPINEAL">
+                 <Name>Form CRV-ACCESS-PINEAL</Name>
+                 <Description>Form required for accessing documented results on Pineal Maintenance Apparatus efficacy via secure ITA portal.</Description>
+            </Entity>
+             <Entity id="FormHGR7">
+                 <Name>Form HGR-7</Name>
+                 <Description>Compliance form related to "Hygienic Resonance Protocols," simplified by wearing gloves.</Description>
+            </Entity>
+             <Entity id="FormID7734">
+                 <Name>Form ID-7734</Name>
+                 <Description>Form referenced for external application of Pineal Maintenance kit solution. Also mentioned as Interdimensional Visa Application form.</Description>
+            </Entity>
+             <Entity id="FormHMRSWS01">
+                 <Name>Form HMRS-WS-01</Name>
+                 <Description>Designation for the Mandatory Operational Hazard Display Unit (Hazard Identification Chart).</Description>
+            </Entity>
+             <Entity id="FormLT27B">
+                 <Name>Form LT-27/B</Name>
+                 <Description>Manufacturing specification form for the 'Torpedo' Operator Designation Garment.</Description>
+            </Entity>
+             <Entity id="FormQ17">
+                 <Name>Form Q-17</Name>
+                 <Description>"Involuntary Entrainment Manifestation Report" form for logging NVODS-triggering anomalies.</Description>
+            </Entity>
+             <Entity id="FormUQChecklist7">
+                 <Name>Form UQ-Checklist 7</Name>
+                 <Description>Designation for the Mandatory Personnel Well-being Assessment Chart (Unauthorized Qualia Self-Assessment).</Description>
+            </Entity>
+             <Entity id="FormRF4C217">
+                 <Name>Form RF-4C.217</Name>
+                 <Description>Designation for the Regulation Technical Reference Chart: Emotion Beam Trajectory Dynamics.</Description>
+            </Entity>
+             <Entity id="FormRF783C">
+                 <Name>Form RF-78/3C</Name>
+                 <Description>Reference code appearing in webstore footer.</Description>
+            </Entity>
+            <Entity id="ReqCode">
+                <Name>Requisition Code</Name>
+                <Abbreviation>Req Code</Abbreviation>
+                <Description>Standard identifier for products/tools in the COKR Asset Catalogue (e.g., TOOL-PDK-001, DIAG-RSA-VG1).</Description>
+            </Entity>
+            <Entity id="RefCode">
+                <Name>Reference Code/ID</Name>
+                <Abbreviation>Ref / Reference ID</Abbreviation>
+                <Description>Identifier for documents, accords, or catalogue items (e.g., KK-IDA-001, Ref: CKR-LP-SP-v3.141, Reference ID: 4881-317).</Description>
+            </Entity>
+             <Entity id="CaseFileBHD78003">
+                 <Name>Case file BH&amp;D-78-003</Name>
+                 <Description>The official record of the 'Lasagna Incident' legal proceedings.</Description>
+             </Entity>
+        </Category>
+
+        <Category name="Statutes, Protocols &amp; Directives">
+            <Entity id="ProtocolRRP">
+                <Name>Resonate Reception Protocol</Name>
+                <Description>Governs musical transcription.</Description>
+            </Entity>
+            <Entity id="Directive77G">
+                <Name>ITA Directive 77G</Name>
+                <Description>Relates to post-calibration for transcription.</Description>
+            </Entity>
+            <Entity id="AccordIDA">
+                <Name>Initial Deployment Accords</Name>
+                <Description>Established Llandyckk as Primary Manifestation Locus Alpha (Ref: KK-IDA-001).</Description>
+            </Entity>
+            <Entity id="ProtocolSVDP">
+                <Name>Seminal Vibrational Discharge Protocol</Name>
+                <Abbreviation>SVDP</Abbreviation>
+                <Description>Governs physiological events during performance.</Description>
+            </Entity>
+            <Entity id="CompactITA">
+                <Name>Intranodal Transit Authority Compact</Name>
+                <Description>Establishes the Intranodal Transit Authority (specifically Section IV).</Description>
+            </Entity>
+            <Entity id="GuidelinePGFB004">
+                <Name>Procedural Guideline PG-FB-004 ("Audience Resonance Analysis")</Name>
+                <Description>Governs the logging of audience feedback.</Description>
+            </Entity>
+            <Entity id="ProtocolSCP-KK-01">
+                <Name>Self-Correction Protocol SCP-KK-01</Name>
+                <Description>Mandates periodic internal audits.</Description>
+            </Entity>
+            <Entity id="StatuteCopyrightAveMaria">
+                 <Name>Copyright statute on the 'Ave Maria-Kent Variant'</Name>
+                 <Description>Legal basis for the 'Lasagna Incident' lawsuit.</Description>
+             </Entity>
+             <Entity id="Syllabus4D">
+                 <Name>ITA Syllabus 4D</Name>
+                 <Description>Relates to the details of Syncopational Privileges.</Description>
+            </Entity>
+            <Entity id="Directive101">
+                <Name>ITA Directive 101</Name>
+                <Description>Consulted when starting bands, if indicated by DIAG-RSA-VG1 kit.</Description>
+            </Entity>
+             <Entity id="ProtocolIMP">
+                <Name>Interdimensional Materialization Protocol</Name>
+                <Description>Governs manifestation and dormancy periods (e.g., Statute 7B). Note: Contains 'Interdimensional' but seems canonical to the name.</Description>
+            </Entity>
+             <Entity id="Statute7B">
+                <Name>Statute 7B</Name>
+                <Description>Section of the Interdimensional Materialization Protocol. Also cited regarding unauthorized possession/impersonation and distribution of classified info.</Description>
+            </Entity>
+             <Entity id="SystemKK317">
+                <Name>Autorhythmic Safety System KK-317</Name>
+                <Description>Referenced in Hazard Identification Chart notice regarding consequences of failing to recognize hazards.</Description>
+            </Entity>
+             <Entity id="Directive88K">
+                <Name>ITA Directive 88K</Name>
+                <Description>Governs issuance of the REO Operational Outer Garment.</Description>
+            </Entity>
+             <Entity id="SchemeNVODS">
+                 <Name>Non-Voluntary Ontological Disclosure Scheme</Name>
+                 <Abbreviation>NVODS</Abbreviation>
+                 <Description>System triggered by reporting anomalies, mentioned in webstore footer.</Description>
+            </Entity>
+             <Entity id="FrameworkUOIF">
+                 <Name>Unified Oscillatory Interpretability Framework</Name>
+                 <Abbreviation>UOIF</Abbreviation>
+                 <Description>System for retroactively classifying qualia, mentioned in webstore footer.</Description>
+            </Entity>
+             <Entity id="MandatePEBM">
+                 <Name>Provisional Emotion Beam Mandate</Name>
+                 <Abbreviation>PEBM</Abbreviation>
+                 <Description>Authority for subliminal internodal monitoring, mentioned in webstore footer.</Description>
+            </Entity>
+             <Entity id="MandateDRIM04">
+                 <Name>Data Resonance Integrity Mandate DRIM-04</Name>
+                 <Description>Governs passive monitoring of operational rhythmadelic signatures.</Description>
+            </Entity>
+             <Entity id="ProtocolREOGamma7">
+                 <Name>REO Protocol Gamma-7</Name>
+                 <Description>Governs Ritual Enforcement intervention for unauthorized replication/dissemination.</Description>
+            </Entity>
+             <Entity id="Statute4C317">
+                <Name>Temporal Integrity Statute 4C.317</Name>
+                <Description>Violated by unauthorized access to restricted portals.</Description>
+            </Entity>
+        </Category>
+
+        <Category name="Key Concepts & Phenomena">
+            <!-- Many concepts are also in Lexicon, listed here if they function as named 'things' -->
+            <Entity id="ConceptEmotionBeam">
+                <Name>Emotion Beam</Name>
+                <Description>(See Lexicon)</Description>
+            </Entity>
+            <Entity id="ConceptVG">
+                <Name>Vibrational Genealogy</Name>
+                <Description>(See Lexicon)</Description>
+            </Entity>
+            <Entity id="ConceptRhythmadelicAwareness">
+                <Name>Rhythmadelic Awareness</Name>
+                <Description>Transcendent qualitative states or sensitivity level within KK's system.</Description>
+            </Entity>
+            <Entity id="PhenomenonORGE">
+                <Name>Orgasmic Resonance Cascade</Name>
+                <Description>Specific event documented at East Hendred (Incident report EH-Incident-78-MPE-FINAL).</Description>
+            </Entity>
+             <Entity id="IncidentLasagna">
+                <Name>Lasagna Incident</Name>
+                <Description>Incident involving lawsuit against parents of triplets, documented in Case file BH&amp;D-78-003.</Description>
+            </Entity>
+             <Entity id="IncidentFeynmanKent">
+                <Name>Feynman-Kent Incident</Name>
+                <Description>Event in 1974, possibly involving Richard Feynman in Llandyckk, verified by SCI.</Description>
+            </Entity>
+             <Entity id="EventFewcottConvergence">
+                 <Name>Fewcott Convergence</Name>
+                 <Description>Event associated with research, trace elements in products, and potentially shared arousal states.</Description>
+             </Entity>
+              <Entity id="ConceptPhaseTransition">
+                 <Name>Phase Transition / The Threshold</Name>
+                 <Description>An imminent event predicted in the Codex Kinesis involving global rhythmadelic synchronization.</Description>
+             </Entity>
+               <Entity id="ConceptInstrumentalEmbodiment">
+                 <Name>Instrumental Embodiment</Name>
+                 <Description>(See Lexicon - Kardinal Principle)</Description>
+             </Entity>
+             <Entity id="ConceptKineticRitual">
+                 <Name>Kinetic Ritual</Name>
+                 <Description>(See Lexicon)</Description>
+            </Entity>
+            <!-- Add other recurring concepts if needed -->
+        </Category>
+
+    </Categories>
+</KlarkKentCanonicalEntities>
