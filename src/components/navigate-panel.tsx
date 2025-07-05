@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChevronRight, ChevronDown, File, Folder, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import personaPlaceholder from "@/assets/persona-placeholder.png";
+import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
 interface FileNode {
   name: string;
@@ -12,100 +12,161 @@ interface FileNode {
   selected?: 'active' | 'inactive' | 'partial';
 }
 
-// Mock data structure based on the wireframe
-const mockFileTree: FileNode[] = [
+// Klark Kent persona file structure
+const klarKentFileTree: FileNode[] = [
   {
-    name: "FOLDER 1",
-    type: "folder",
-    selected: "active",
-    children: []
-  },
-  {
-    name: "FOLDER 2",
+    name: "audio",
     type: "folder",
     selected: "inactive",
-    children: []
-  },
-  {
-    name: "DOC 1.xml",
-    type: "file",
-    selected: "inactive"
-  },
-  {
-    name: "DOC 2.md",
-    type: "file",
-    selected: "active",
-    edited: true
-  },
-  {
-    name: "DOC 3.xml",
-    type: "file",
-    selected: "inactive"
-  },
-  {
-    name: "FOLDER 3",
-    type: "folder",
-    selected: "active",
-    children: []
-  },
-  {
-    name: "FOLDER 4",
-    type: "folder",
-    selected: "inactive",
-    children: []
-  },
-  {
-    name: "FOLDER 5",
-    type: "folder",
-    selected: "active",
     children: [
       {
-        name: "SUBFOLDER 1",
-        type: "folder",
-        selected: "active",
-        children: []
-      },
-      {
-        name: "SUBFOLDER 2",
-        type: "folder",
-        selected: "active",
-        children: [
-          {
-            name: "DOC 11.xml",
-            type: "file",
-            selected: "active"
-          },
-          {
-            name: "DOC 12.xml",
-            type: "file",
-            selected: "active",
-            edited: true
-          },
-          {
-            name: "DOC 13.xml",
-            type: "file",
-            selected: "active"
-          },
-          {
-            name: "DOC 14.md",
-            type: "file",
-            selected: "active"
-          }
-        ]
+        name: "KK_Ambience_Marsh.mp3",
+        type: "file",
+        selected: "inactive"
       }
     ]
   },
   {
-    name: "FOLDER 6",
-    type: "folder",
+    name: "image",
+    type: "folder", 
     selected: "inactive",
-    children: []
+    children: [
+      {
+        name: "KK_Shrinkface_M.png",
+        type: "file",
+        selected: "inactive"
+      }
+    ]
   },
   {
-    name: "FOLDER 7",
+    name: "versions",
     type: "folder",
-    selected: "inactive",
-    children: []
+    selected: "active",
+    children: [
+      {
+        name: "INITIAL",
+        type: "folder",
+        selected: "active",
+        children: [
+          {
+            name: "agents",
+            type: "folder",
+            selected: "active",
+            children: [
+              {
+                name: "critic",
+                type: "folder",
+                selected: "active",
+                children: [
+                  { name: "persona_data.xml", type: "file", selected: "active" },
+                  { name: "system_prompt.md", type: "file", selected: "active" }
+                ]
+              },
+              {
+                name: "researcher", 
+                type: "folder",
+                selected: "active",
+                children: [
+                  { name: "persona_data.xml", type: "file", selected: "active" },
+                  { name: "system_prompt.md", type: "file", selected: "active" }
+                ]
+              },
+              {
+                name: "studio",
+                type: "folder", 
+                selected: "active",
+                children: [
+                  { name: "persona_data.xml", type: "file", selected: "active" },
+                  { name: "system_prompt.md", type: "file", selected: "active" }
+                ]
+              },
+              {
+                name: "voice",
+                type: "folder",
+                selected: "active", 
+                children: [
+                  { name: "persona_data.xml", type: "file", selected: "active" },
+                  { name: "system_prompt.md", type: "file", selected: "active", edited: true }
+                ]
+              },
+              {
+                name: "writer",
+                type: "folder",
+                selected: "active",
+                children: [
+                  { name: "persona_data.xml", type: "file", selected: "active" },
+                  { name: "system_prompt.md", type: "file", selected: "active" }
+                ]
+              }
+            ]
+          },
+          {
+            name: "config",
+            type: "folder",
+            selected: "active",
+            children: [
+              { name: "kontextbase_map.xml", type: "file", selected: "active" },
+              { name: "register_selection_guide.xml", type: "file", selected: "active" }
+            ]
+          },
+          {
+            name: "content_examples",
+            type: "folder",
+            selected: "active",
+            children: [
+              {
+                name: "spoken",
+                type: "folder",
+                selected: "active",
+                children: [
+                  { name: "core_principles.xml", type: "file", selected: "active" },
+                  { name: "qna_examples.xml", type: "file", selected: "active" },
+                  { name: "target_ckr02.xml", type: "file", selected: "active" },
+                  { name: "target_dearmrc.xml", type: "file", selected: "active" }
+                ]
+              },
+              {
+                name: "written", 
+                type: "folder",
+                selected: "active",
+                children: [
+                  { name: "core_principles.xml", type: "file", selected: "active" },
+                  { name: "qna_examples.xml", type: "file", selected: "active" },
+                  { name: "target_webstore.xml", type: "file", selected: "active" }
+                ]
+              }
+            ]
+          },
+          {
+            name: "data",
+            type: "folder",
+            selected: "active", 
+            children: [
+              { name: "canonical_entities.xml", type: "file", selected: "active" },
+              { name: "codex_summary.xml", type: "file", selected: "active" },
+              { name: "proprietary_lexicon.xml", type: "file", selected: "active" },
+              {
+                name: "lore",
+                type: "folder",
+                selected: "active",
+                children: [
+                  { name: "original_sources_archive.md", type: "file", selected: "active" }
+                ]
+              }
+            ]
+          },
+          {
+            name: "definition",
+            type: "folder",
+            selected: "active",
+            children: [
+              { name: "development_log.md", type: "file", selected: "active" },
+              { name: "fine_tuning_log.md", type: "file", selected: "active" }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -197,7 +258,7 @@ const FileTreeNode = ({
 };
 
 export const NavigatePanel = () => {
-  const [fileTree, setFileTree] = useState(mockFileTree);
+  const [fileTree, setFileTree] = useState(klarKentFileTree);
   
   const handleNodeUpdate = (index: number, updatedNode: FileNode) => {
     const newTree = [...fileTree];
@@ -233,11 +294,14 @@ export const NavigatePanel = () => {
             <div className="mb-3">
               <h3 className="text-lg font-semibold text-foreground mb-2">METADATA</h3>
               <div className="text-xs text-muted-foreground space-y-1 font-mono">
-                <div>- Voice_ID</div>
-                <div>- Image_filename</div>
-                <div>- Other metadata</div>
-                <div>- Additional info</div>
-                <div>- More details</div>
+                <div>- Voice_ID: YOUR_ELEVENLABS_VOICE_ID_HERE</div>
+                <div>- Image: KK_Shrinkface_M.png</div>
+                <div>- Persona: Klark Kent</div>
+                <div>- Version: INITIAL</div>
+                <div>- Agents: 5 (critic, researcher, studio, voice, writer)</div>
+                <div>- Status: Active</div>
+                <div>- Church: CKR (Church of Kinetic Ritual)</div>
+                <div>- Location: Llandyckk, Wales</div>
               </div>
             </div>
             
@@ -250,8 +314,8 @@ export const NavigatePanel = () => {
           <div className="w-28">
             <div className="w-full h-full rounded-lg overflow-hidden border border-border shadow-elegant">
               <img 
-                src={personaPlaceholder} 
-                alt="Persona Avatar"
+                src={klarKentImage} 
+                alt="Klark Kent Avatar"
                 className="w-full h-full object-cover"
               />
             </div>
