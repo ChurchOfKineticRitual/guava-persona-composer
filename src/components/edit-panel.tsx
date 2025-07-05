@@ -27,7 +27,7 @@ Text Text Text Text Text Text Text`);
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-base leading-relaxed font-mono"
+          className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-base leading-relaxed"
           placeholder="Select a file to edit..."
         />
       </div>

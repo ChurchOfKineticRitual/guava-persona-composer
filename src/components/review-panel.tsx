@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Copy, Save, Play } from "lucide-react";
-import personaPlaceholder from "@/assets/persona-placeholder.png";
+
 
 export const ReviewPanel = () => {
   const [personaSelect, setPersonaSelect] = useState("");
@@ -106,20 +106,6 @@ export const ReviewPanel = () => {
         </div>
       </div>
 
-      {/* Behold Section */}
-      <div className="p-4 border-b border-border">
-        <h2 className="text-lg font-semibold text-foreground mb-3">BEHOLD</h2>
-        <div className="flex justify-center">
-          <div className="w-24 h-24 rounded-lg overflow-hidden border border-border shadow-elegant">
-            <img 
-              src={personaPlaceholder} 
-              alt="Persona Avatar"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
       {/* Review Section */}
       <div className="flex-1 p-4 flex flex-col">
         <h2 className="text-lg font-semibold text-foreground mb-3">REVIEW</h2>
@@ -127,7 +113,7 @@ export const ReviewPanel = () => {
         <Card className="flex-1 bg-muted/20 border-border">
           <CardContent className="p-3 h-full">
             <div className="h-full overflow-y-auto">
-              <pre className="text-sm text-foreground whitespace-pre-wrap font-mono">
+              <pre className="text-sm text-foreground whitespace-pre-wrap">
                 {modelOutput}
               </pre>
             </div>

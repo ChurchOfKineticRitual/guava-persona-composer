@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronRight, ChevronDown, File, Folder, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import personaPlaceholder from "@/assets/persona-placeholder.png";
 
 interface FileNode {
   name: string;
@@ -150,7 +151,7 @@ const FileTreeNode = ({ node, depth = 0 }: { node: FileNode; depth?: number }) =
           <File className="w-4 h-4 text-muted-foreground" />
         )}
         
-        <span className="flex-1 truncate">{node.name}</span>
+        <span className="flex-1 truncate font-mono">{node.name}</span>
       </div>
       
       {node.type === 'folder' && isExpanded && node.children && (
@@ -183,16 +184,28 @@ export const NavigatePanel = () => {
 
       {/* Metadata Section */}
       <div className="border-t border-border p-4">
-        <div className="mb-3">
-          <h3 className="text-sm font-medium text-foreground mb-2">METADATA</h3>
-          <div className="text-xs text-muted-foreground space-y-1">
+        <div className="mb-4">
+          <h3 className="text-sm font-medium text-foreground mb-3">METADATA</h3>
+          
+          {/* Persona Image */}
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-28 rounded-lg overflow-hidden border border-border shadow-elegant">
+              <img 
+                src={personaPlaceholder} 
+                alt="Persona Avatar"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+          
+          <div className="text-xs text-muted-foreground space-y-1 font-mono">
             <div>- Voice_ID</div>
             <div>- Image_filename</div>
             <div>- Other metadata</div>
           </div>
         </div>
         
-        <Button variant="destructive" size="sm" className="w-full">
+        <Button variant="outline" size="sm" className="w-1/2">
           RESET
         </Button>
       </div>
