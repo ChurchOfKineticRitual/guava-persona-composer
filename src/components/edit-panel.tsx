@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePersona } from "@/contexts/persona-context";
+import { PersonaImage } from "@/components/persona-image";
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
 export const EditPanel = () => {
@@ -36,14 +37,11 @@ Text Text Text Text Text Text Text`);
       </div>
 
       {/* Persona Image - Bottom Right Corner */}
-      <div className="absolute bottom-4 right-4 w-28 h-28">
-        <div className="w-full h-full rounded-lg overflow-hidden border border-border">
-          <img 
-            src={klarKentImage} 
-            alt="Klark Kent Avatar"
-            className="w-full h-full object-cover"
-          />
-        </div>
+      <div className="absolute bottom-4 right-4">
+        <PersonaImage 
+          src={klarKentImage} 
+          alt="Klark Kent Avatar"
+        />
       </div>
     </div>
   );
