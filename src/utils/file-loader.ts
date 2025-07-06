@@ -4,10 +4,10 @@ import { fileCache } from './file-cache';
 // Load file content from the actual repository files
 export const loadFileContent = async (filePath: string): Promise<string> => {
   try {
-    // Remove leading slash if present and fetch from the public directory
+    // Clean the path - remove leading slash and ensure it's properly formatted
     const cleanPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
     
-    // Fetch the file content from the public directory
+    // Fetch the file content from the public directory (which is the root when served)
     const response = await fetch(`/${cleanPath}`);
     
     if (!response.ok) {
