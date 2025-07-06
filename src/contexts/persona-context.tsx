@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { getAvailablePersonas, getPersonaVersions } from '@/utils/file-system';
 
 interface PersonaContextType {
@@ -23,15 +23,64 @@ export const usePersona = () => {
 };
 
 export const PersonaProvider = ({ children }: { children: ReactNode }) => {
-  const [selectedPersona, setSelectedPersona] = useState('klark_kent');
-  const [selectedVersion, setSelectedVersion] = useState('INITIAL');
-  const [selectedFile, setSelectedFile] = useState<string | null>('/personas/klark_kent/versions/INITIAL/config/kontextbase_map.xml');
-  
-  // Available personas - will be loaded dynamically in future
-  const personas = ['klark_kent'];
-  
-  // Available versions for selected persona - will be loaded dynamically in future  
-  const versions = ['INITIAL'];
+  const [selectedPersona, setSelectedPersona] = useState('');
+  const [selectedVersion, setSelectedVersion] = useState('');
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [personas, setPersonas] = useState<string[]>([]);
+  const [versions, setVersions] = useState<string[]>([]);
+
+  // Load available personas on mount
+  useEffect(() => {
+    const loadPersonas = async () => {
+      try {
+        const availablePersonas = await getAvailablePersonas();
+        setPersonas(availablePersonas);
+        if (availablePersonas.length > 0 && !selectedPersona) {
+          setSelectedPersona(availablePersonas[0]);
+        }
+      } catch (error) {
+        console.error('Failed to load personas:', error);
+        // Fallback to hardcoded list
+        setPersonas(['klark_kent']);
+        if (!selectedPersona) {
+          setSelectedPersona('klark_kent');
+        }
+      }
+    };
+    
+    loadPersonas();
+  }, []);
+
+  // Load versions when persona changes
+  useEffect(() => {
+    if (selectedPersona) {
+      const loadVersions = async () => {
+        try {
+          const availableVersions = await getPersonaVersions(selectedPersona);
+          setVersions(availableVersions);
+          if (availableVersions.length > 0 && !selectedVersion) {
+            setSelectedVersion(availableVersions[0]);
+          }
+        } catch (error) {
+          console.error('Failed to load versions:', error);
+          // Fallback to hardcoded list
+          setVersions(['INITIAL']);
+          if (!selectedVersion) {
+            setSelectedVersion('INITIAL');
+          }
+        }
+      };
+      
+      loadVersions();
+    }
+  }, [selectedPersona]);
+
+  // Set default file when persona and version are available
+  useEffect(() => {
+    if (selectedPersona && selectedVersion && !selectedFile) {
+      setSelectedFile(`/personas/${selectedPersona}/versions/${selectedVersion}/config/kontextbase_map.xml`);
+    }
+  }, [selectedPersona, selectedVersion]);
 
   return (
     <PersonaContext.Provider
