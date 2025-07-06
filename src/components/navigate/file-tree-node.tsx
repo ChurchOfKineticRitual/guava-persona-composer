@@ -5,17 +5,29 @@ import { FileNode } from "@/utils/file-system";
 
 const SelectionIndicator = ({ 
   selected, 
-  onClick 
+  onClick,
+  isFolder
 }: { 
   selected?: 'active' | 'inactive' | 'partial';
   onClick: () => void;
+  isFolder?: boolean;
 }) => {
+  const size = isFolder ? "w-4 h-4" : "w-3 h-3";
+  
   if (selected === 'active') {
-    return <Circle className="w-3 h-3 fill-primary text-primary cursor-pointer hover:opacity-80" onClick={onClick} />;
+    return <Circle className={`${size} fill-primary text-primary cursor-pointer hover:opacity-80 flex-shrink-0`} onClick={onClick} />;
   } else if (selected === 'partial') {
-    return <Circle className="w-3 h-3 fill-primary/50 text-primary cursor-pointer hover:opacity-80" onClick={onClick} />;
+    // Half-moon effect using a mask
+    return (
+      <div className={`${size} relative cursor-pointer hover:opacity-80 flex-shrink-0`} onClick={onClick}>
+        <Circle className={`${size} text-primary`} />
+        <div className={`absolute inset-0 ${size} overflow-hidden`}>
+          <Circle className={`${size} fill-primary`} style={{ clipPath: 'polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)' }} />
+        </div>
+      </div>
+    );
   }
-  return <Circle className="w-3 h-3 text-muted-foreground/40 cursor-pointer hover:text-muted-foreground" onClick={onClick} />;
+  return <Circle className={`${size} text-muted-foreground/40 cursor-pointer hover:text-muted-foreground flex-shrink-0`} onClick={onClick} />;
 };
 
 interface FileTreeNodeProps {
@@ -36,19 +48,38 @@ export const FileTreeNode = ({
   const [isExpanded, setIsExpanded] = useState(true);
   
   const handleSelectionClick = () => {
-    const nextState: 'active' | 'inactive' | 'partial' = node.selected === 'active' ? 'inactive' : 'active';
-    const updatedNode = { ...node, selected: nextState };
-    onNodeUpdate(updatedNode);
+    if (node.type === 'folder' && node.selected === 'partial') {
+      // Toggle all children to active, then inactive on next click
+      const allActive = node.children?.every(child => child.selected === 'active');
+      const newState: 'active' | 'inactive' = allActive ? 'inactive' : 'active';
+      const updateChildrenRecursively = (children: FileNode[]): FileNode[] => {
+        return children.map(child => ({
+          ...child,
+          selected: newState,
+          children: child.children ? updateChildrenRecursively(child.children) : undefined
+        }));
+      };
+      const updatedNode = { 
+        ...node, 
+        selected: newState,
+        children: node.children ? updateChildrenRecursively(node.children) : undefined
+      };
+      onNodeUpdate(updatedNode);
+    } else {
+      const nextState: 'active' | 'inactive' = node.selected === 'active' ? 'inactive' : 'active';
+      const updatedNode = { ...node, selected: nextState };
+      onNodeUpdate(updatedNode);
+    }
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: node.type === 'folder' && isExpanded ? 'hsl(var(--navpan-folder-bg))' : undefined }}>
       <div 
         className={cn(
-          "flex items-center gap-2 py-1 px-2 text-sm cursor-pointer hover:bg-muted/30 transition-colors",
+          "flex items-center gap-2 py-1 text-sm cursor-pointer hover:bg-muted/30 transition-colors relative",
           node.edited && "text-accent font-medium"
         )}
-        style={{ paddingLeft: `${depth * 12 + 8}px` }}
+        style={{ paddingLeft: `${depth * 12 + 8}px`, paddingRight: '32px' }}
       >
         {node.type === 'folder' && (
           <button 
@@ -62,8 +93,6 @@ export const FileTreeNode = ({
             )}
           </button>
         )}
-        
-        <SelectionIndicator selected={node.selected} onClick={handleSelectionClick} />
         
         {node.type === 'folder' ? (
           <Folder className="w-4 h-4 text-muted-foreground" />
@@ -81,10 +110,19 @@ export const FileTreeNode = ({
         >
           {node.name}
         </span>
+        
+        {/* Selection indicator positioned at the right */}
+        <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <SelectionIndicator 
+            selected={node.selected} 
+            onClick={handleSelectionClick} 
+            isFolder={node.type === 'folder'}
+          />
+        </div>
       </div>
       
       {node.type === 'folder' && isExpanded && node.children && (
-        <div>
+        <div style={{ backgroundColor: 'hsl(var(--navpan-folder-bg))' }}>
           {node.children.map((child, index) => (
             <FileTreeNode 
               key={child.path || `${child.name}-${index}`}

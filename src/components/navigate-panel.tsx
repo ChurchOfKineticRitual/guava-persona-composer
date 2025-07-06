@@ -57,14 +57,14 @@ export const NavigatePanel = () => {
     );
   }
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col" style={{ backgroundColor: 'hsl(var(--navpan-bg))' }}>
       {/* Header */}
       <div className="p-4 border-b border-border">
         <h2 className="text-lg font-semibold text-foreground">NAVIGATE</h2>
       </div>
 
-      {/* File Tree */}
-      <div className="flex-1 overflow-y-auto p-2">
+      {/* File Tree with Scroll */}
+      <div className="flex-1 overflow-y-auto p-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border">
         <div className="space-y-0.5">
           {fileTree.map((node, index) => (
             <FileTreeNode 

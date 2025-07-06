@@ -49,6 +49,10 @@
     --edit-min-width: 400px;
     --review-width: 320px;
     
+    /* NavigatePanel Colors */
+    --navpan-bg: 240 8% 8%;
+    --navpan-folder-bg: 240 6% 12%;
+    
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-surface: linear-gradient(180deg, hsl(var(--card)), hsl(var(--muted) / 0.3));
