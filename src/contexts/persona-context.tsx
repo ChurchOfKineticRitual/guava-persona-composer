@@ -25,7 +25,7 @@ export const usePersona = () => {
 export const PersonaProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPersona, setSelectedPersona] = useState('klark_kent');
   const [selectedVersion, setSelectedVersion] = useState('INITIAL');
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>('/personas/klark_kent/versions/INITIAL/config/kontextbase_map.xml');
   
   // Available personas - will be loaded dynamically in future
   const personas = ['klark_kent'];

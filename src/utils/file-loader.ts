@@ -7,11 +7,17 @@ export const loadFileContent = async (filePath: string): Promise<string> => {
     // Convert the virtual file path to the actual file path
     const actualPath = filePath.startsWith('/personas/') ? filePath.substring(1) : filePath;
     
-    // Fetch the file content
+    // Fetch the file content from the public directory
     const response = await fetch(`/${actualPath}`);
     
     if (!response.ok) {
-      throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
+      // Try alternative path construction
+      const altPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
+      const altResponse = await fetch(`/${altPath}`);
+      if (!altResponse.ok) {
+        throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
+      }
+      return await altResponse.text();
     }
     
     const content = await response.text();

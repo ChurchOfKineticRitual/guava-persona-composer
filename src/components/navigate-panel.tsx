@@ -7,7 +7,7 @@ import { getPersonaStructure, getPersonaMetadata, FileNode } from "@/utils/file-
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
 export const NavigatePanel = () => {
-  const { selectedPersona, selectedVersion, setSelectedFile } = usePersona();
+  const { selectedPersona, selectedVersion, selectedFile, setSelectedFile } = usePersona();
   const [fileTree, setFileTree] = useState<FileNode[]>([]);
   const [metadata, setMetadata] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -106,8 +106,9 @@ const FileTreeNode = ({
         
         <span 
           className={cn(
-            "flex-1 truncate",
-            node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono"
+            "flex-1 truncate cursor-pointer",
+            node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono",
+            node.type === 'file' && selectedFile === node.path && "text-orange-500 font-medium"
           )}
           onClick={() => node.type === 'file' && onFileClick?.(node.path)}
         >
