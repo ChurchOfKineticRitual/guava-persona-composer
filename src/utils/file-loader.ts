@@ -4,20 +4,14 @@ import { fileCache } from './file-cache';
 // Load file content from the actual repository files
 export const loadFileContent = async (filePath: string): Promise<string> => {
   try {
-    // Convert the virtual file path to the actual file path
-    const actualPath = filePath.startsWith('/personas/') ? filePath.substring(1) : filePath;
+    // Remove leading slash if present and fetch from the public directory
+    const cleanPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
     
     // Fetch the file content from the public directory
-    const response = await fetch(`/${actualPath}`);
+    const response = await fetch(`/${cleanPath}`);
     
     if (!response.ok) {
-      // Try alternative path construction
-      const altPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
-      const altResponse = await fetch(`/${altPath}`);
-      if (!altResponse.ok) {
-        throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
-      }
-      return await altResponse.text();
+      throw new Error(`Failed to load file: ${response.status} ${response.statusText}`);
     }
     
     const content = await response.text();

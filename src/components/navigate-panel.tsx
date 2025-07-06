@@ -108,7 +108,7 @@ const FileTreeNode = ({
           className={cn(
             "flex-1 truncate cursor-pointer transition-colors",
             node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono",
-            node.type === 'file' && selectedFile === node.path && "text-accent font-medium"
+            node.type === 'file' && selectedFile === node.path && "!text-accent font-medium"
           )}
           onClick={() => node.type === 'file' && onFileClick?.(node.path)}
         >
