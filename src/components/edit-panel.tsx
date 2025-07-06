@@ -5,6 +5,14 @@ import { loadAndParseFile } from "@/utils/file-loader";
 import { fileCache } from "@/utils/file-cache";
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
+// Format XML content with grey tags
+const formatXMLContent = (content: string): string => {
+  return content.replace(
+    /(<[^>]*>)/g, 
+    '<span style="color: hsl(240 5% 64.9%)">$1</span>'
+  );
+};
+
 export const EditPanel = () => {
   const { selectedPersona, selectedFile } = usePersona();
   const [content, setContent] = useState("");
@@ -63,13 +71,18 @@ export const EditPanel = () => {
             <div className="text-muted-foreground">Loading file content...</div>
           </div>
         ) : (
-          <textarea
-            value={content}
-            onChange={(e) => handleContentChange(e.target.value)}
-            className="w-full h-full bg-transparent border-none outline-none resize-none text-foreground text-base leading-relaxed"
-            placeholder="Select a file to edit..."
-            disabled={!selectedFile}
-          />
+          <div className="relative h-full">
+            <div
+              contentEditable={!!selectedFile}
+              suppressContentEditableWarning={true}
+              onInput={(e) => handleContentChange(e.currentTarget.textContent || '')}
+              className="w-full h-full bg-transparent border-none outline-none text-foreground text-base leading-relaxed whitespace-pre-wrap"
+              style={{ minHeight: '100%' }}
+              dangerouslySetInnerHTML={{
+                __html: selectedFile && content ? formatXMLContent(content) : '<span class="text-muted-foreground">Select a file to edit...</span>'
+              }}
+            />
+          </div>
         )}
       </div>
 
