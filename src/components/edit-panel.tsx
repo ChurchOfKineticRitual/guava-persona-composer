@@ -5,10 +5,17 @@ import { loadAndParseFile } from "@/utils/file-loader";
 import { fileCache } from "@/utils/file-cache";
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
-// Format XML content with grey tags
+// Format XML content with grey tags and white content
 const formatXMLContent = (content: string): string => {
-  return content.replace(
-    /(<[^>]*>)/g, 
+  // Escape HTML entities to prevent XSS
+  const escapedContent = content
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+  
+  // Apply syntax highlighting: grey for XML tags, white for content
+  return escapedContent.replace(
+    /(&lt;[^&]*?&gt;)/g, 
     '<span style="color: hsl(240 5% 64.9%)">$1</span>'
   );
 };
