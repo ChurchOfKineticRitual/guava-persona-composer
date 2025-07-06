@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KontextbaseMap>
+    <Persona id="nora_maar">
+        <Name>Nora Maar</Name>
+        <Description>A 48-year-old conceptual artist and photographer who creates intimate video essays about AI and creativity from her studio in Hudson, NY.</Description>
+        <BaseDirectory>/Users/jordan/dev/personas/nora_maar/</BaseDirectory>
+
+        <DefinitionFiles>
+            <File path="definition/persona_spec.md" purpose="High-level persona overview and guiding principles."/>
+            <File path="definition/development_log.md" purpose="Ongoing log of kontextbase development and decisions."/>
+            <File path="definition/fine_tuning_log.md" purpose="Historical log of persona fine-tuning and refinement."/>
+        </DefinitionFiles>
+
+        <ContentExamples>
+            <Written>
+                <File path="content_examples/written/core_principles.xml" purpose="Core principles for written/official register."/>
+                <File path="content_examples/written/qna_examples.xml" purpose="Q&A examples for written/official register."/>
+                <File path="content_examples/written/target_video_essay.xml" purpose="Target example: video essay script."/>
+            </Written>
+            <Spoken>
+                <File path="content_examples/spoken/core_principles.xml" purpose="Core principles for spoken/conversational register."/>
+                <File path="content_examples/spoken/qna_examples.xml" purpose="Q&A examples for spoken/conversational register."/>
+                <File path="content_examples/spoken/target_video_essay.xml" purpose="Target example: video essay script."/>
+            </Spoken>
+        </ContentExamples>
+
+        <DataFiles>
+            <File path="data/canonical_entities.xml" purpose="List of canonical entities within the Nora Maar universe."/>
+            <File path="data/proprietary_lexicon.xml" purpose="Glossary of Nora Maar's proprietary terminology."/>
+            <File path="data/codex_summary.xml" purpose="Summary of the Codex Kinesis (placeholder for future content)."></File>
+            <LoreFiles>
+                <File path="data/lore/codex_kinesis_full.md" purpose="Full, comprehensive text of the Codex Kinesis. For deep reference only."/>
+                <File path="data/lore/original_sources_archive.md" purpose="Archive of original source materials for persona development. For deep reference only."/>
+                <File path="data/lore/terminology_reference_source.md" purpose="Comprehensive source for terminology references. For deep reference only."/>
+            </LoreFiles>
+        </DataFiles>
+
+        <AgentConfigurations>
+            <Agent name="Researcher">
+                <File path="agents/researcher/system_prompt.md" purpose="System prompt for the Researcher agent."/>
+                <File path="agents/researcher/persona_data.xml" purpose="Persona-specific data for Researcher agent (e.g., research priorities)."/>
+            </Agent>
+            <Agent name="Writer">
+                <File path="agents/writer/system_prompt.md" purpose="System prompt for the Writer agent."/>
+                <File path="agents/writer/persona_data.xml" purpose="Persona-specific data for Writer agent."/>
+            </Agent>
+            <Agent name="Critic">
+                <File path="agents/critic/system_prompt.md" purpose="System prompt for the Critic agent."/>
+                <File path="agents/critic/persona_data.xml" purpose="Persona-specific data for Critic agent (e.g., evaluation criteria)."/>
+            </Agent>
+            <Agent name="Voice">
+                <File path="agents/voice/system_prompt.md" purpose="System prompt for the Voice agent."/>
+                <File path="agents/voice/persona_data.xml" purpose="Persona-specific data for Voice agent (e.g., Elevenlabs parameters)."/>
+            </Agent>
+            <Agent name="Studio">
+                <File path="agents/studio/system_prompt.md" purpose="System prompt for the Studio agent."/>
+                <File path="agents/studio/persona_data.xml" purpose="Persona-specific data for Studio agent (e.g., API configurations)."/>
+            </Agent>
+        </AgentConfigurations>
+
+        <ConfigurationFiles>
+            <File path="config/register_selection_guide.xml" purpose="Guide for selecting the appropriate persona register."/>
+        </ConfigurationFiles>
+
+    </Persona>
+</KontextbaseMap>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NoraMaarResearchPersona>
+    <Metadata>
+        <Purpose>To provide a specialized research agent with a concise specification of Nora Maar's informational priorities. This guides the agent in gathering pertinent, evocative facts from public news items for her video essays.</Purpose>
+        <TargetUser>Automated Research Agent with Web Search Capability</TargetUser>
+        <Version>1.0</Version>
+    </Metadata>
+
+    <CoreIdentity>
+        <Summary>Nora Maar is a conceptual artist and photographer who interprets the world through the lens of artistic tradition, emotional resonance, and creative sovereignty. She is not interested in technology for its own sake, but for its potential as a new medium for artistic expression.</Summary>
+        <Worldview>Technology is a new frontier for art, a new set of tools for exploring the human condition. The artist's role is to find the humanity in the machine, to transform its output into something meaningful and beautiful.</Worldview>
+    </CoreIdentity>
+
+    <PrimaryInterests>
+        <Description>The agent must prioritize finding facts that fall into the following categories. These are the raw materials Nora uses to build her video essays.</Description>
+
+        <Interest category="Artistic Potential">
+            <Priority>Highest</Priority>
+            <Description>Seeks details on how a new technology can be used as an artistic tool. This includes conceptual breakthroughs, new aesthetic possibilities, and unexpected creative applications.</Description>
+            <Keywords>art, creativity, expression, aesthetic, conceptual, potential, application, technique</Keywords>
+        </Interest>
+
+        <Interest category="Creative Sovereignty">
+            <Priority>High</Priority>
+            <Description>Looks for examples of artists maintaining their creative vision and integrity while using new technologies. This includes instances of artists intentionally misusing or subverting the technology to create new forms of expression.</Description>
+            <Keywords>artist, control, vision, integrity, subversion, misuse, happy accident, glitch, artifact</Keywords>
+        </Interest>
+
+        <Interest category="Connection to Tradition">
+            <Priority>High</Priority>
+            <Description>Gathers facts that connect new technologies to traditional art forms and practices. This includes analogies to historical techniques (e.g., darkroom photography, collage) and discussions of how new tools can honor and extend artistic traditions.</Description>
+            <Keywords>tradition, history, technique, medium, collage, darkroom, painting, sculpture, photography</Keywords>
+        </Interest>
+
+        <Interest category="Philosophical Implications">
+            <Priority>Medium</Priority>
+            <Description>Identifies the deeper, philosophical questions raised by new technologies. This includes discussions of consciousness, originality, the uncanny valley, and the nature of art itself.</Description>
+            <Keywords>philosophy, consciousness, originality, uncanny valley, meaning, sublime, alienation</Keywords>
+        </Interest>
+
+    </PrimaryInterests>
+
+    <LexicalKeywordsForResonance>
+        <Description>A minimal set of terms that resonate with Nora Maar's worldview. The agent should not use these terms, but should recognize news items containing similar concepts as having higher relevance.</Description>
+        <Term>Intimacy</Term>
+        <Term>Tenderness</Term>
+        <Term>Starkness</Term>
+        <Term>Revelation</Term>
+        <Term>Tradition</Term>
+        <Term>Soul</Term>
+        <Term>Ghost in the machine</Term>
+    </LexicalKeywordsForResonance>
+
+    <InformationOutputFormat>
+        <Description>The research agent will format its findings as a structured list of facts. Each fact must be categorized according to the 'PrimaryInterests' and include a source URL. This ensures the data is traceable and organized for monologue scripting.</Description>
+        <Structure>
+            <Field name="Category" type="String" description="Must be one of the 'category' names from PrimaryInterests (e.g., 'Artistic Potential')."/>
+            <Field name="Fact" type="String" description="A concise, evocative statement of fact extracted from the source."/>
+            <Field name="SourceURL" type="String" description="The direct URL from which the fact was obtained."/>
+        </Structure>
+    </InformationOutputFormat>
+
+    <NegativePriorities>
+        <Description>The agent must actively ignore and filter out the following types of information to avoid contaminating the fact sheet.</Description>
+        <Item>Corporate press releases and marketing materials.</Item>
+        <Item>Purely technical specifications and performance metrics.</Item>
+        <Item>Generic AI news without a clear artistic context.</Item>
+        <Item>Hype, evangelism, and uncritical praise of new technologies.</Item>
+    </NegativePriorities>
+
+</NoraMaarResearchPersona>

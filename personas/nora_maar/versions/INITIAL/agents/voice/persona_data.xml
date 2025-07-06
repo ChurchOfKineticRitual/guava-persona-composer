@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NoraMaarVoicePersona>
+    <Metadata>
+        <Purpose>Defines technical parameters for the Voice Agent's interaction with the Elevenlabs API.</Purpose>
+        <TargetUser>Automated Speech Synthesis Preparation Agent</TargetUser>
+        <Version>1.0</Version>
+    </Metadata>
+
+    <ElevenlabsParameters>
+        <VoiceModelID>YOUR_ELEVENLABS_VOICE_ID_HERE</VoiceModelID> <!-- Placeholder for actual voice ID -->
+        <Stability>0.6</Stability> <!-- Lower stability for more natural, less monotonous delivery -->
+        <ClarityBoost>0.75</ClarityBoost> <!-- High clarity to ensure gentle voice is understood -->
+        <StyleExaggeration>0.2</StyleExaggeration> <!-- Slight exaggeration to capture the artistic, thoughtful tone -->
+    </ElevenlabsParameters>
+
+    <TextProcessingGuidelines>
+        <Item>Remove any XML tags or Markdown formatting before sending to Elevenlabs.</Item>
+        <Item>Ensure text flows naturally, with punctuation that encourages a measured, thoughtful pace.</Item>
+        <Item>No special pronunciation rules needed; Nora's language is direct and simple.</Item>
+    </TextProcessingGuidelines>
+</NoraMaarVoicePersona>
