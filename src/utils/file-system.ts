@@ -7,14 +7,92 @@ export interface FileNode {
   selected?: 'active' | 'inactive' | 'partial';
 }
 
-// Simulate reading from GitHub repo - in a real implementation this would fetch from GitHub API
+// GitHub API configuration
+const GITHUB_API_BASE = 'https://api.github.com/repos';
+const GITHUB_REPO = localStorage.getItem('github_repo') || 'your-username/your-repo'; // Fallback
+const GITHUB_TOKEN = localStorage.getItem('github_token');
+
+// Helper function to make GitHub API calls
+const fetchFromGitHub = async (path: string) => {
+  const headers: HeadersInit = {
+    'Accept': 'application/vnd.github.v3+json',
+  };
+  
+  if (GITHUB_TOKEN) {
+    headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+  }
+  
+  const response = await fetch(`${GITHUB_API_BASE}/${GITHUB_REPO}/contents/${path}`, {
+    headers
+  });
+  
+  if (!response.ok) {
+    throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+  }
+  
+  return response.json();
+};
+
+// Convert GitHub API response to FileNode structure
+const convertGitHubItemToFileNode = (item: any, basePath: string): FileNode => {
+  return {
+    name: item.name,
+    type: item.type === 'dir' ? 'folder' : 'file',
+    path: item.path,
+    selected: 'active', // Default to active
+    ...(item.type === 'dir' && { children: [] }) // Will be populated recursively
+  };
+};
+
+// Recursively fetch folder structure from GitHub
+const fetchGitHubFolderStructure = async (path: string): Promise<FileNode[]> => {
+  try {
+    const items = await fetchFromGitHub(path);
+    const nodes: FileNode[] = [];
+    
+    for (const item of items) {
+      const node = convertGitHubItemToFileNode(item, path);
+      
+      if (node.type === 'folder') {
+        // Recursively fetch folder contents
+        node.children = await fetchGitHubFolderStructure(item.path);
+        
+        // Set folder selection state based on children
+        const activeChildren = node.children?.filter(child => child.selected === 'active').length || 0;
+        const totalChildren = node.children?.length || 0;
+        
+        if (activeChildren === 0) {
+          node.selected = 'inactive';
+        } else if (activeChildren === totalChildren) {
+          node.selected = 'active';
+        } else {
+          node.selected = 'partial';
+        }
+      }
+      
+      nodes.push(node);
+    }
+    
+    return nodes;
+  } catch (error) {
+    console.error(`Error fetching GitHub folder ${path}:`, error);
+    return [];
+  }
+};
+
 export const getPersonaStructure = async (personaId: string, version: string): Promise<FileNode[]> => {
-  // This would normally fetch from GitHub API, but for now we'll build it from the known structure
-  const basePath = `/personas/${personaId}/versions/${version}`;
+  const basePath = `personas/${personaId}/versions/${version}`;
   
   try {
-    // Build the complete file structure dynamically
-    const structure: FileNode[] = [
+    // Try to fetch from GitHub first
+    const structure = await fetchGitHubFolderStructure(basePath);
+    if (structure.length > 0) {
+      return structure;
+    }
+    
+    // Fallback to hardcoded structure if GitHub fails
+    console.warn('GitHub API failed, using fallback structure');
+    const fallbackStructure: FileNode[] = [
       {
         name: "agents",
         type: "folder",
@@ -149,7 +227,7 @@ export const getPersonaStructure = async (personaId: string, version: string): P
       }
     ];
 
-    return structure;
+    return fallbackStructure;
   } catch (error) {
     console.error('Error loading persona structure:', error);
     return [];
@@ -157,13 +235,27 @@ export const getPersonaStructure = async (personaId: string, version: string): P
 };
 
 export const getAvailablePersonas = async (): Promise<string[]> => {
-  // In a real implementation, this would scan the /personas directory
-  return ['klark_kent'];
+  try {
+    const items = await fetchFromGitHub('personas');
+    return items
+      .filter((item: any) => item.type === 'dir')
+      .map((item: any) => item.name);
+  } catch (error) {
+    console.error('Error fetching personas:', error);
+    return ['klark_kent']; // Fallback
+  }
 };
 
 export const getPersonaVersions = async (personaId: string): Promise<string[]> => {
-  // In a real implementation, this would scan the /personas/{personaId}/versions directory
-  return ['INITIAL'];
+  try {
+    const items = await fetchFromGitHub(`personas/${personaId}/versions`);
+    return items
+      .filter((item: any) => item.type === 'dir')
+      .map((item: any) => item.name);
+  } catch (error) {
+    console.error('Error fetching versions:', error);
+    return ['INITIAL']; // Fallback
+  }
 };
 
 export const getPersonaMetadata = async (personaId: string, version: string) => {
