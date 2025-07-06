@@ -9,11 +9,12 @@ export interface FileNode {
 
 // GitHub API configuration
 const GITHUB_API_BASE = 'https://api.github.com/repos';
-const GITHUB_REPO = localStorage.getItem('github_repo') || 'your-username/your-repo'; // Fallback
-const GITHUB_TOKEN = localStorage.getItem('github_token');
 
 // Helper function to make GitHub API calls
 const fetchFromGitHub = async (path: string) => {
+  const GITHUB_REPO = localStorage.getItem('github_repo') || 'ChurchOfKineticRitual/guava-persona-composer';
+  const GITHUB_TOKEN = localStorage.getItem('github_token');
+  
   const headers: HeadersInit = {
     'Accept': 'application/vnd.github.v3+json',
   };

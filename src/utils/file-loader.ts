@@ -9,7 +9,7 @@ export const loadFileContent = async (filePath: string): Promise<string> => {
     
     // GitHub API configuration
     const GITHUB_API_BASE = 'https://api.github.com/repos';
-    const GITHUB_REPO = localStorage.getItem('github_repo') || 'your-username/your-repo';
+    const GITHUB_REPO = localStorage.getItem('github_repo') || 'ChurchOfKineticRitual/guava-persona-composer';
     const GITHUB_TOKEN = localStorage.getItem('github_token');
     
     const headers: HeadersInit = {
