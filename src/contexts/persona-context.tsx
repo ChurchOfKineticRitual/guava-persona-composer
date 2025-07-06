@@ -32,8 +32,13 @@ export const PersonaProvider = ({ children }: { children: ReactNode }) => {
   // Load available personas on mount
   useEffect(() => {
     const loadPersonas = async () => {
+      console.log('Loading personas...');
+      console.log('GitHub repo:', localStorage.getItem('github_repo'));
+      console.log('GitHub token exists:', !!localStorage.getItem('github_token'));
+      
       try {
         const availablePersonas = await getAvailablePersonas();
+        console.log('Available personas:', availablePersonas);
         setPersonas(availablePersonas);
         if (availablePersonas.length > 0 && !selectedPersona) {
           setSelectedPersona(availablePersonas[0]);
