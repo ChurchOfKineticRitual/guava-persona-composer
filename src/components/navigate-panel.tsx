@@ -106,7 +106,7 @@ const FileTreeNode = ({
         
         <span 
           className={cn(
-            "flex-1 truncate cursor-pointer",
+            "flex-1 truncate cursor-pointer transition-colors",
             node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono",
             node.type === 'file' && selectedFile === node.path && "text-orange-500 font-medium"
           )}

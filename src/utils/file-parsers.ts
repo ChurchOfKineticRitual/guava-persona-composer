@@ -1,22 +1,29 @@
-// Parse XML content to readable text
+// Parse XML content to readable text while preserving structure
 export const parseXMLToText = (xmlContent: string): string => {
-  // Remove XML declarations and comments
+  // Remove XML declarations and comments but preserve for reconstruction
   let text = xmlContent.replace(/<\?xml[^>]*\?>/g, '');
   text = text.replace(/<!--[\s\S]*?-->/g, '');
   
-  // Convert common XML tags to readable format
-  text = text.replace(/<title[^>]*>(.*?)<\/title>/gi, '# $1\n\n');
-  text = text.replace(/<heading[^>]*>(.*?)<\/heading>/gi, '## $1\n\n');
-  text = text.replace(/<description[^>]*>(.*?)<\/description>/gi, '$1\n\n');
-  text = text.replace(/<content[^>]*>(.*?)<\/content>/gi, '$1\n\n');
-  text = text.replace(/<example[^>]*>(.*?)<\/example>/gi, 'Example: $1\n\n');
-  text = text.replace(/<note[^>]*>(.*?)<\/note>/gi, 'Note: $1\n\n');
+  // Convert XML elements to readable annotations that preserve semantic meaning
+  // Use a format that's human-readable but can be reliably converted back
+  text = text.replace(/<(\w+)([^>]*)>([\s\S]*?)<\/\1>/gi, (match, tagName, attributes, content) => {
+    const trimmedContent = content.trim();
+    const attrText = attributes.trim() ? ` ${attributes.trim()}` : '';
+    
+    if (trimmedContent.includes('<')) {
+      // Nested content - use block format
+      return `[${tagName.toUpperCase()}${attrText}]\n${trimmedContent}\n[/${tagName.toUpperCase()}]\n\n`;
+    } else {
+      // Simple content - use inline format
+      return `[${tagName.toUpperCase()}${attrText}] ${trimmedContent}\n\n`;
+    }
+  });
   
-  // Remove remaining XML tags but keep content
-  text = text.replace(/<[^>]*>/g, '');
+  // Handle self-closing tags
+  text = text.replace(/<(\w+)([^>]*?)\/>/gi, '[${1.toUpperCase()}$2 /]\n\n');
   
-  // Clean up whitespace
-  text = text.replace(/\n\s*\n\s*\n/g, '\n\n');
+  // Clean up excessive whitespace while preserving structure
+  text = text.replace(/\n\s*\n\s*\n+/g, '\n\n');
   text = text.trim();
   
   return text;
@@ -30,36 +37,35 @@ export const parseMarkdownToText = (mdContent: string): string => {
 
 // Convert parsed text back to XML
 export const textToXML = (text: string, originalXML: string): string => {
-  // This is a simplified implementation
-  // In practice, you'd want to preserve the original XML structure
+  // Preserve the original XML declaration if it exists
+  const xmlDeclaration = originalXML.match(/<\?xml[^>]*\?>/)?.[0] || '<?xml version="1.0" encoding="UTF-8"?>';
   
-  // Extract the root element from original
-  const rootMatch = originalXML.match(/<(\w+)[^>]*>/);
-  const rootElement = rootMatch ? rootMatch[1] : 'content';
+  // Convert the annotated text back to proper XML
+  let xml = text;
   
-  // Basic conversion back to XML
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<${rootElement}>\n`;
+  // Convert block-style annotations back to XML
+  xml = xml.replace(/\[(\w+)([^\]]*?)\]\n([\s\S]*?)\[\/\1\]/gi, (match, tagName, attributes, content) => {
+    const trimmedContent = content.trim();
+    return `<${tagName.toLowerCase()}${attributes}>${trimmedContent}</${tagName.toLowerCase()}>`;
+  });
   
-  const lines = text.split('\n');
-  for (const line of lines) {
-    const trimmedLine = line.trim();
-    if (!trimmedLine) continue;
-    
-    if (trimmedLine.startsWith('# ')) {
-      xml += `  <title>${trimmedLine.substring(2)}</title>\n`;
-    } else if (trimmedLine.startsWith('## ')) {
-      xml += `  <heading>${trimmedLine.substring(3)}</heading>\n`;
-    } else if (trimmedLine.startsWith('Example: ')) {
-      xml += `  <example>${trimmedLine.substring(9)}</example>\n`;
-    } else if (trimmedLine.startsWith('Note: ')) {
-      xml += `  <note>${trimmedLine.substring(6)}</note>\n`;
+  // Convert inline-style annotations back to XML
+  xml = xml.replace(/\[(\w+)([^\]]*?)\]\s*(.*?)(?=\n|$)/gi, (match, tagName, attributes, content) => {
+    const trimmedContent = content.trim();
+    if (trimmedContent) {
+      return `<${tagName.toLowerCase()}${attributes}>${trimmedContent}</${tagName.toLowerCase()}>`;
     } else {
-      xml += `  <content>${trimmedLine}</content>\n`;
+      return `<${tagName.toLowerCase()}${attributes} />`;
     }
-  }
+  });
   
-  xml += `</${rootElement}>`;
-  return xml;
+  // Handle self-closing tags
+  xml = xml.replace(/\[(\w+)([^\]]*?)\s+\/\]/gi, '<$1$2 />');
+  
+  // Clean up and add XML declaration
+  xml = xml.replace(/\n\s*\n+/g, '\n').trim();
+  
+  return `${xmlDeclaration}\n${xml}`;
 };
 
 // Convert parsed text back to Markdown
