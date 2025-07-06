@@ -4,8 +4,10 @@ import { getAvailablePersonas, getPersonaVersions } from '@/utils/file-system';
 interface PersonaContextType {
   selectedPersona: string;
   selectedVersion: string;
+  selectedFile: string | null;
   setSelectedPersona: (persona: string) => void;
   setSelectedVersion: (version: string) => void;
+  setSelectedFile: (file: string | null) => void;
   personas: string[];
   versions: string[];
 }
@@ -23,6 +25,7 @@ export const usePersona = () => {
 export const PersonaProvider = ({ children }: { children: ReactNode }) => {
   const [selectedPersona, setSelectedPersona] = useState('klark_kent');
   const [selectedVersion, setSelectedVersion] = useState('INITIAL');
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   
   // Available personas - will be loaded dynamically in future
   const personas = ['klark_kent'];
@@ -35,8 +38,10 @@ export const PersonaProvider = ({ children }: { children: ReactNode }) => {
       value={{
         selectedPersona,
         selectedVersion,
+        selectedFile,
         setSelectedPersona,
         setSelectedVersion,
+        setSelectedFile,
         personas,
         versions,
       }}

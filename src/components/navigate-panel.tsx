@@ -7,7 +7,7 @@ import { getPersonaStructure, getPersonaMetadata, FileNode } from "@/utils/file-
 import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
 
 export const NavigatePanel = () => {
-  const { selectedPersona, selectedVersion } = usePersona();
+  const { selectedPersona, selectedVersion, setSelectedFile } = usePersona();
   const [fileTree, setFileTree] = useState<FileNode[]>([]);
   const [metadata, setMetadata] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,10 @@ export const NavigatePanel = () => {
 
     loadPersonaData();
   }, [selectedPersona, selectedVersion]);
+
+  const handleFileClick = (filePath: string) => {
+    setSelectedFile(filePath);
+  };
   
 const SelectionIndicator = ({ 
   selected, 
@@ -54,11 +58,13 @@ const SelectionIndicator = ({
 const FileTreeNode = ({ 
   node, 
   depth = 0, 
-  onNodeUpdate 
+  onNodeUpdate,
+  onFileClick 
 }: { 
   node: FileNode; 
   depth?: number;
   onNodeUpdate: (updatedNode: FileNode) => void;
+  onFileClick?: (path: string) => void;
 }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   
@@ -98,10 +104,13 @@ const FileTreeNode = ({
           <File className="w-4 h-4 text-muted-foreground" />
         )}
         
-        <span className={cn(
-          "flex-1 truncate",
-          node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono"
-        )}>
+        <span 
+          className={cn(
+            "flex-1 truncate",
+            node.type === 'folder' ? "font-sans uppercase font-medium" : "font-mono"
+          )}
+          onClick={() => node.type === 'file' && onFileClick?.(node.path)}
+        >
           {node.name}
         </span>
       </div>
@@ -112,7 +121,8 @@ const FileTreeNode = ({
             <FileTreeNode 
               key={child.path || `${child.name}-${index}`}
               node={child} 
-              depth={depth + 1} 
+              depth={depth + 1}
+              onFileClick={onFileClick}
               onNodeUpdate={(updatedChild) => {
                 if (node.children) {
                   const updatedChildren = [...node.children];
@@ -159,7 +169,8 @@ const FileTreeNode = ({
           {fileTree.map((node, index) => (
             <FileTreeNode 
               key={node.path || `${node.name}-${index}`}
-              node={node} 
+              node={node}
+              onFileClick={handleFileClick}
               onNodeUpdate={(updatedNode) => handleNodeUpdate(index, updatedNode)}
             />
           ))}
