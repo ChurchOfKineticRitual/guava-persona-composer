@@ -45,11 +45,8 @@ export const PersonaProvider = ({ children }: { children: ReactNode }) => {
         }
       } catch (error) {
         console.error('Failed to load personas:', error);
-        // Fallback to hardcoded list
-        setPersonas(['klark_kent']);
-        if (!selectedPersona) {
-          setSelectedPersona('klark_kent');
-        }
+        // Don't fall back to hardcoded data - we need GitHub to work
+        setPersonas([]);
       }
     };
     
@@ -68,11 +65,8 @@ export const PersonaProvider = ({ children }: { children: ReactNode }) => {
           }
         } catch (error) {
           console.error('Failed to load versions:', error);
-          // Fallback to hardcoded list
-          setVersions(['INITIAL']);
-          if (!selectedVersion) {
-            setSelectedVersion('INITIAL');
-          }
+          // Don't fall back to hardcoded data - we need GitHub to work
+          setVersions([]);
         }
       };
       

@@ -3,7 +3,7 @@ import { usePersona } from "@/contexts/persona-context";
 import { PersonaImage } from "@/components/persona-image";
 import { loadAndParseFile } from "@/utils/file-loader";
 import { fileCache } from "@/utils/file-cache";
-import klarKentImage from "/personas/klark_kent/image/KK_Shrinkface_M.png";
+import { githubAPI } from "@/utils/github-api";
 
 // Format XML content with grey tags and white content
 const formatXMLContent = (content: string): string => {
@@ -25,6 +25,7 @@ export const EditPanel = () => {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [personaImageUrl, setPersonaImageUrl] = useState<string | null>(null);
 
   // Load file content when selectedFile changes
   useEffect(() => {
@@ -50,6 +51,26 @@ export const EditPanel = () => {
 
     loadFile();
   }, [selectedFile]);
+
+  // Load persona image when selectedPersona changes
+  useEffect(() => {
+    const loadPersonaImage = async () => {
+      if (!selectedPersona) {
+        setPersonaImageUrl(null);
+        return;
+      }
+
+      try {
+        const imageUrl = await githubAPI.getPersonaImage(selectedPersona);
+        setPersonaImageUrl(imageUrl);
+      } catch (error) {
+        console.error('Failed to load persona image:', error);
+        setPersonaImageUrl(null);
+      }
+    };
+
+    loadPersonaImage();
+  }, [selectedPersona]);
 
   // Update cache when content changes
   const handleContentChange = (newContent: string) => {
@@ -94,12 +115,14 @@ export const EditPanel = () => {
       </div>
 
       {/* Persona Image - Bottom Right Corner */}
-      <div className="absolute bottom-4 right-4">
-        <PersonaImage 
-          src={klarKentImage} 
-          alt="Klark Kent Avatar"
-        />
-      </div>
+      {personaImageUrl && (
+        <div className="absolute bottom-4 right-4">
+          <PersonaImage 
+            src={personaImageUrl} 
+            alt={`${selectedPersona} Avatar`}
+          />
+        </div>
+      )}
     </div>
   );
 };
