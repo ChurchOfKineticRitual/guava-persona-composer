@@ -4,8 +4,6 @@ import { getPersonaStructure, getPersonaMetadata, FileNode } from "@/utils/file-
 import { FileTreeNode } from "./navigate/file-tree-node";
 import { MetadataSection } from "./navigate/metadata-section";
 import { GitHubStatus } from "./github-status";
-import { GitHubTokenInput } from "./github-token-input";
-
 
 export const NavigatePanel = () => {
   const { selectedPersona, selectedVersion, selectedFile, setSelectedFile } = usePersona();
@@ -99,9 +97,8 @@ export const NavigatePanel = () => {
       </div>
 
       {/* GitHub Status */}
-      <div className="p-2 border-b border-border space-y-2">
+      <div className="p-2 border-b border-border">
         <GitHubStatus onRetry={handleRetry} />
-        <GitHubTokenInput />
       </div>
 
       {/* File Tree with Scroll */}

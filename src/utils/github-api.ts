@@ -15,15 +15,10 @@ class GitHubAPI {
   private baseUrl = 'https://api.github.com/repos';
   
   private getConfig(): GitHubApiConfig {
-    // TODO: Replace with actual repository name created in conversation
-    const repo = 'ChurchOfKineticRitual/guava-persona-composer';
+    const repo = localStorage.getItem('github_repo') || 'ChurchOfKineticRitual/guava-persona-composer';
     const token = localStorage.getItem('github_token');
     
-    console.log('=== GITHUB DEBUG ===');
-    console.log('Trying to connect to repository:', repo);
-    console.log('Has token:', !!token);
-    console.log('Please check if this repository exists and is accessible');
-    console.log('==================');
+    console.log('GitHub API Config:', { repo, hasToken: !!token });
     
     return { repo, token };
   }
