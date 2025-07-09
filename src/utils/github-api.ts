@@ -15,8 +15,8 @@ class GitHubAPI {
   private baseUrl = 'https://api.github.com/repos';
   
   private getConfig(): GitHubApiConfig {
-    const repo = localStorage.getItem('github_repo') || 'ChurchOfKineticRitual/guava-persona-composer';
-    const token = localStorage.getItem('github_token');
+    const repo = 'ChurchOfKineticRitual/guava-persona-composer';
+    const token = localStorage.getItem('github_token'); // Keep token configurable for auth
     
     console.log('GitHub API Config:', { repo, hasToken: !!token });
     
